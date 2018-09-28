@@ -5,9 +5,11 @@
   "author": "cwxyz007 <jie844067636@gmail.com>",
   "bin": "bin.js",
   "scripts": {
-    "test": ""
+    "test": "mocha",
+    "dev": "node bin.js"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "mocha": "^5.2.0"
   },
   "license": "MIT",
