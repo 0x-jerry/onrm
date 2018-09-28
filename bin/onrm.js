@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-const PKG = require('./package.json');
+
+const PKG = require('../package.json');
 const program = require('commander')
-const config = require('./config.js');
+const config = require('./config');
 const shelljs = require('shelljs');
 const path = require('path');
 const fs = require('fs');
@@ -73,6 +74,7 @@ function onCurrent() {
   shelljs.echo('')
 
   shelljs.exec('npm config get registry')
+  shelljs.echo('')
 }
 
 /**
@@ -83,12 +85,14 @@ function onUse(name) {
   const regs = getRegistries();
   const find = regs.find(r => r.name === name);
 
+  shelljs.echo('');
   if (find) {
     shelljs.exec(`npm config set registry ${find.registry}`)
-    shelljs.echo(`set registry ${find.registry}\n`);
+    shelljs.echo(`set registry ${find.registry}`);
   } else {
     shelljs.echo('not found', name);
   }
+  shelljs.echo('');
 }
 
 /**
@@ -117,6 +121,8 @@ function onAdd(name, url, home) {
   }
 
   saveConfig(conf);
+
+  shelljs.echo(`\n add registry ${name} -- ${url}\n`);
 }
 
 /**
@@ -126,10 +132,20 @@ function onAdd(name, url, home) {
 function onDel(name) {
   const conf = getLocalConfig();
   const index = conf.registries.findIndex(r => r.name === name);
+  const remove = config.registries[index];
+
   if (index !== -1) {
     conf.registries.splice(index, 1);
   }
+
   saveConfig(conf);
+
+  if (remove) {
+    shelljs.echo(`\n delete registry ${remove.name} -- ${remove.registry}\n`);
+  } else {
+    shelljs.echo(`\n not found ${name} registry\n`);
+  }
+
 }
 
 function onHelp() {

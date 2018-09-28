@@ -3,13 +3,13 @@ const {
   onDel,
   getRegistries,
   clearLocalConfig
-} = require('../bin');
+} = require('../bin/onrm');
 
 const {
   expect
 } = require('chai');
 
-const config = require('../config');
+const config = require('../bin/config');
 process.env.HOME = '~'
 
 beforeEach(() => {
