@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const PKG = require('./package.json');
 const program = require('commander')
 const config = require('./config.js');
