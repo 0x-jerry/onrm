@@ -54,7 +54,9 @@ if (process.argv.length === 2) {
 function onLs() {
   const regs = getRegistries();
 
-  shelljs.exec('npm config get registry', (_, stdout) => {
+  shelljs.exec('npm config get registry', {
+    silent: true
+  }, (_, stdout) => {
     const reg = stdout;
     const index = regs.findIndex(r => reg.includes(r.registry));
 
