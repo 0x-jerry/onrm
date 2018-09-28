@@ -1,5 +1,7 @@
 # NPM Registry Manager
 
+Another NPM registry manager, like the [nrm](https://github.com/Pana/nrm)
+
 ## Install
 
 ```sh
