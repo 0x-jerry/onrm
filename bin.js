@@ -43,6 +43,12 @@ program
 program
   .parse(process.argv);
 
+if (process.argv.length === 2) {
+  onHelp();
+}
+
+// ------------------------------------------
+
 function onLs() {
   const regs = getRegistries();
 
