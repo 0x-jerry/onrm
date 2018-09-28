@@ -83,7 +83,7 @@ function onUse(name) {
   const find = regs.find(r => r.name === name);
 
   if (find) {
-    shelljs.exec(`${npm} config set registry ${find.registry}`)
+    shelljs.exec(`npm config set registry ${find.registry}`)
     shelljs.echo(`set registry ${find.registry}\n`);
   } else {
     shelljs.echo('not found', name);
