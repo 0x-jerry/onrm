@@ -25,8 +25,8 @@ program
   .action(onCurrent);
 
 program
-  .command('use <name>')
-  .description('Change registry to registry')
+  .command('use <name> [type]')
+  .description('Change registry to registry, type is one of [yarn, npm]')
   .action(onUse);
 
 program
@@ -90,14 +90,15 @@ function onCurrent() {
 /**
  *
  * @param {string} name registry name
+ * @param {string=} type package manager type, yarn or npm, default set both config
  */
-function onUse(name) {
-  const info = setCurrentRegistry(name);
-  const pkg = (info.msg.npm ? 'npm, ' : '') + (info.msg.yarn ? 'yarn' : '');
+function onUse(name, type) {
+  const info = setCurrentRegistry(name, type);
+  const pkg = (info.msg.npm ? 'npm' : '') + ' ' + (info.msg.yarn ? 'yarn' : '');
 
   const msg = info.find ?
-    `set ( ${ pkg } ) registry ${ info.find.registry }` :
-    `not found ${ name }`;
+    `set ( ${ pkg.trim().split(/\s/).join(', ') } ) registry ${ info.find.registry }` :
+    `not found [ ${ name } ] registry`;
 
   shelljs.echo(`\n ${ msg } \n`);
 }
@@ -196,15 +197,19 @@ function getCurrentRegistry() {
 /**
  *
  * @param {string} name registry name
+ * @param {string=} type package manager type, yarn or npm, default exec both command
  */
-function setCurrentRegistry(name) {
+function setCurrentRegistry(name, type) {
   const regs = getRegistries().all;
   const find = regs.find(r => r.name === name);
 
-  let msg = null;
+  let msg = {
+    npm: null,
+    yarn: null
+  };
 
   if (find) {
-    msg = execPkgManagerCommand(`config set registry ${ find.registry }`)
+    msg = execPkgManagerCommand(`config set registry ${ find.registry }`, type)
   }
 
   return {
