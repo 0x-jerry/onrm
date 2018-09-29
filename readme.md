@@ -1,5 +1,8 @@
 # NPM Registry Manager
 
+[![Npm Version](https://img.shields.io/badge/latest-v1.0.4-brightgreen.svg)](https://github.com/cwxyz007/onrm)
+[![Node Version](https://img.shields.io/badge/node-8.x-brightgreen.svg)](https://nodejs.org)
+
 Another NPM registry manager, like the [nrm](https://github.com/Pana/nrm)
 
 - Support npm and yarn
