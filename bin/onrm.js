@@ -53,28 +53,29 @@ if (process.argv.length === 2) {
 
 // ------------------------------------------
 
-function onLs() {
-  const regs = getRegistries().all;
+async function onLs() {
+  const {registries, currentRegIndex} = await getRegistriesWithCurrent();
 
-  shelljs.exec('npm config get registry', {
-    silent: true
-  }, (_, stdout) => {
-    const reg = stdout;
-    const index = regs.findIndex(r => reg.includes(r.registry));
+  let msg = '\n';
+  registries.forEach((r, i) => {
+    msg += (i === currentRegIndex.npm || i === currentRegIndex.yarn) ? '* ' : '  ';
 
-    let msg = '\n';
+    msg += (r.name + ' ').padEnd(10, '-') + ' ';
+    msg += r.registry + ' ';
 
-    regs.forEach((r, i) => {
-      msg += `${((i === index ? '* ': '  ') + r.name+' ').padEnd(14, '-')} ${r.registry}`
-      msg += '\n';
-    })
+    let pkg = (i === currentRegIndex.npm ? 'npm ' : ' ') + (i === currentRegIndex.yarn ? 'yarn' : '');
 
-    shelljs.echo(msg)
+    pkg = pkg.trim().split(/\s/).join(', ');
+
+    msg += pkg && `[${ pkg }]`;
+    msg += '\n';
   })
+
+  shelljs.echo(msg)
 }
 
-function onCurrent() {
-  const info = getCurrentRegistry();
+async function onCurrent() {
+  const info = await getCurrentRegistry();
 
   let msg = '';
 
@@ -92,8 +93,8 @@ function onCurrent() {
  * @param {string} name registry name
  * @param {string=} type package manager type, yarn or npm, default set both config
  */
-function onUse(name, type) {
-  const info = setCurrentRegistry(name, type);
+async function onUse(name, type) {
+  const info = await setCurrentRegistry(name, type);
   const pkg = (info.msg.npm ? 'npm' : '') + ' ' + (info.msg.yarn ? 'yarn' : '');
 
   const msg = info.find ?
@@ -145,27 +146,62 @@ function onHelp() {
 /**
  *
  * @param {string} cmd
+ * @param {function} cb
  */
-function exec(cmd) {
+function exec(cmd, cb) {
   if (DEBUG) {
     shelljs.echo('Command is', cmd);
   }
 
+  // Error handle wrapper
+  let cbWrapper = null
+  if (cb) {
+    cbWrapper = (code, stdout, stderr) => {
+      stderr && shelljs.echo('Error ', stderr);
+
+      cb(code, stdout, stderr);
+    }
+  }
+
   const result = shelljs.exec(cmd, {
     silent: true
-  });
+  }, cbWrapper);
 
-  if (result.stderr) {
+  if (!cb && result.stderr) {
     shelljs.echo('Error ', result.stderr);
   }
 
   return result;
 }
 
+async function getRegistriesWithCurrent() {
+  const regs = getRegistries().all;
+  const info = await getCurrentRegistry();
+
+  let currentRegIndex = {
+    npm: -1,
+    yarn: -1
+  }
+
+  if (info.npm) {
+    currentRegIndex.npm = regs.findIndex(r => info.npm.includes(r.registry));
+  }
+
+  if (info.yarn) {
+    currentRegIndex.yarn = regs.findIndex(r => info.yarn.includes(r.registry));
+  }
+
+  return {
+    registries: regs,
+    currentRegIndex: currentRegIndex
+  }
+}
+
 /**
  *
  * @param {string} cmd command
  * @param {string=} type Pkg type, one of [yarn, npm], exec both if null
+ * @returns {Promise}
  */
 function execPkgManagerCommand(cmd, type) {
   const types = ['npm', 'yarn'];
@@ -178,16 +214,29 @@ function execPkgManagerCommand(cmd, type) {
     yarn: false
   };
 
-  execTypes.forEach(t => {
-    if (shelljs.which(t)) {
-      const result = exec(`${ t } ${ cmd }`);
-      msg[t] = !result.stderr && (result.stdout || true);
-    } else {
-      shelljs.echo(`not found ${ t } command`)
-    }
-  })
+  return new Promise((resolve) => {
+    let count = 0;
 
-  return msg;
+    const resolveWithMsg = () => {
+      if (count >= execTypes.length) {
+        resolve(msg);
+      }
+    }
+
+    execTypes.forEach(t => {
+      if (shelljs.which(t)) {
+        exec(`${ t } ${ cmd }`, (code, stdout, stderr) => {
+          count++;
+          msg[t] = !stderr && (stdout || true);
+          resolveWithMsg();
+        });
+      } else {
+        count++;
+        shelljs.echo(`not found ${ t } command`)
+        resolveWithMsg();
+      }
+    })
+  })
 }
 
 function getCurrentRegistry() {
@@ -199,7 +248,7 @@ function getCurrentRegistry() {
  * @param {string} name registry name
  * @param {string=} type package manager type, yarn or npm, default exec both command
  */
-function setCurrentRegistry(name, type) {
+async function setCurrentRegistry(name, type) {
   const regs = getRegistries().all;
   const find = regs.find(r => r.name === name);
 
@@ -209,7 +258,7 @@ function setCurrentRegistry(name, type) {
   };
 
   if (find) {
-    msg = execPkgManagerCommand(`config set registry ${ find.registry }`, type)
+    msg = await execPkgManagerCommand(`config set registry ${ find.registry }`, type)
   }
 
   return {

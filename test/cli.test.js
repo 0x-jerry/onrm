@@ -43,15 +43,13 @@ describe('test delete command', () => {
   })
 })
 
-describe('test current command', function () {
+describe('test use, current command', () => {
   const regName = 'taobao';
 
-  beforeEach(() => {
-    setCurrentRegistry(regName);
-  })
+  it('should return taobao registry', async () => {
+    await setCurrentRegistry(regName);
+    const info = await getCurrentRegistry();
 
-  it('should return taobao registry', function () {
-    const info = getCurrentRegistry();
     const reg = config.registries.find(r => r.name === regName);
     info.npm && expect(info.npm.trim()).to.be.eq(reg && reg.registry);
     info.yarn && expect(info.yarn.trim()).to.be.eq(reg && reg.registry);
