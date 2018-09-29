@@ -1,6 +1,8 @@
 # NPM Registry Manager
 
-Another NPM registry manager, support npm and yarn, like the [nrm](https://github.com/Pana/nrm)
+Another NPM registry manager, like the [nrm](https://github.com/Pana/nrm)
+
+- Support npm and yarn
 
 ## Install
 
