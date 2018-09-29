@@ -54,7 +54,10 @@ if (process.argv.length === 2) {
 // ------------------------------------------
 
 async function onLs() {
-  const {registries, currentRegIndex} = await getRegistriesWithCurrent();
+  const {
+    registries,
+    currentRegIndex
+  } = await getRegistriesWithCurrent();
 
   let msg = '\n';
   registries.forEach((r, i) => {
@@ -80,7 +83,7 @@ async function onCurrent() {
   let msg = '';
 
   for (const key in info) {
-    msg += `${ (key + ' ').padEnd(8, '-') } ${info[key]}`
+    msg += `${ (key + ' ').padEnd(8, '-') } ${info[key]}\n`
   }
 
   msg = msg.trim(/\s/);
@@ -98,7 +101,7 @@ async function onUse(name, type) {
   const pkg = (info.msg.npm ? 'npm' : '') + ' ' + (info.msg.yarn ? 'yarn' : '');
 
   const msg = info.find ?
-    `set ( ${ pkg.trim().split(/\s/).join(', ') } ) registry ${ info.find.registry }` :
+    `set ( ${ pkg.trim().split(/\s/).join(', ') } ) registry to ${ info.find.registry }` :
     `not found [ ${ name } ] registry`;
 
   shelljs.echo(`\n ${ msg } \n`);
@@ -122,7 +125,7 @@ function onAdd(name, url, home) {
 
   addRegistry(reg);
 
-  shelljs.echo(`\n add registry ${ name } -- ${ url }\n`);
+  shelljs.echo(`\n add registry : ${ name } -- ${ url }\n`);
 }
 
 /**
@@ -130,9 +133,10 @@ function onAdd(name, url, home) {
  * @param {string} name registry name
  */
 function onDel(name) {
-  const msg = delRegistry(name) ?
-    `delete registry ${ remove.name } -- ${ remove.registry }` :
-    `not found ${ name } registry`;
+  const reg = delRegistry(name);
+  const msg = reg ?
+    `delete registry : ${ reg.name } -- ${ reg.registry }` :
+    `not found [ ${ name } ] registry`;
 
   shelljs.echo(`\n ${ msg }\n`);
 }
@@ -228,6 +232,7 @@ function execPkgManagerCommand(cmd, type) {
         exec(`${ t } ${ cmd }`, (code, stdout, stderr) => {
           count++;
           msg[t] = !stderr && (stdout || true);
+          msg[t] = typeof msg[t] === 'string' ? msg[t].trim() : msg[t];
           resolveWithMsg();
         });
       } else {
@@ -334,13 +339,14 @@ function addRegistry(reg) {
 function delRegistry(name) {
   const conf = getLocalConfig();
   const index = conf.registries.findIndex(r => r.name === name);
+  const remove = conf.registries[index];
 
   if (index !== -1) {
     conf.registries.splice(index, 1);
     saveConfig(conf);
   }
 
-  return index !== -1;
+  return remove;
 }
 
 module.exports = {
