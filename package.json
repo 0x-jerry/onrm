@@ -1,17 +1,20 @@
 {
   "name": "onrm",
-  "version": "1.0.4",
-  "main": "index.js",
+  "version": "1.0.5",
+  "main": "./bin/onrm.js",
+  "bin": "./bin/onrm.js",
   "author": "cwxyz007 <jie844067636@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git@github.com:cwxyz007/onrm.git"
   },
+  "bugs": {
+    "url": "https://github.com/cwxyz007/onrm/issues/new"
+  },
   "keywords": [
     "NPM",
     "registry"
   ],
-  "bin": "bin/onrm.js",
   "scripts": {
     "test": "mocha",
     "dev": "node bin/onrm.js"

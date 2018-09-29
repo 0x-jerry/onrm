@@ -5,6 +5,11 @@ module.exports = {
       registry: 'https://registry.npmjs.org/'
     },
     {
+      name: 'yarn',
+      home: 'https://yarnpkg.com',
+      registry: 'https://registry.yarnpkg.com/'
+    },
+    {
       name: 'cnpm',
       home: 'http://cnpmjs.org',
       registry: 'http://r.cnpmjs.org/'
