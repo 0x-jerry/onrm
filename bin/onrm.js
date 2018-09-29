@@ -10,6 +10,8 @@ const os = require('os');
 
 const ONRMRC = path.join(os.homedir(), '.onrmrc');
 
+const DEBUG = false;
+
 program.version(PKG.version);
 
 program
@@ -52,7 +54,7 @@ if (process.argv.length === 2) {
 // ------------------------------------------
 
 function onLs() {
-  const regs = getRegistries();
+  const regs = getRegistries().all;
 
   shelljs.exec('npm config get registry', {
     silent: true
@@ -60,94 +62,77 @@ function onLs() {
     const reg = stdout;
     const index = regs.findIndex(r => reg.includes(r.registry));
 
-    let str = '\n';
+    let msg = '\n';
 
     regs.forEach((r, i) => {
-      str += `${((i === index ? '* ': '  ') + r.name+' ').padEnd(14, '-')} ${r.registry}`
-      str += '\n';
+      msg += `${((i === index ? '* ': '  ') + r.name+' ').padEnd(14, '-')} ${r.registry}`
+      msg += '\n';
     })
 
-    shelljs.echo(str)
+    shelljs.echo(msg)
   })
-
 }
 
 function onCurrent() {
-  shelljs.echo('')
+  const info = getCurrentRegistry();
 
-  shelljs.exec('npm config get registry')
-  shelljs.echo('')
+  let msg = '';
+
+  for (const key in info) {
+    msg += `${ (key + ' ').padEnd(8, '-') } ${info[key]}`
+  }
+
+  msg = msg.trim(/\s/);
+
+  shelljs.echo(`\n${ msg } \n`)
 }
 
 /**
  *
- * @param {string} name register name
+ * @param {string} name registry name
  */
 function onUse(name) {
-  const regs = getRegistries();
-  const find = regs.find(r => r.name === name);
+  const info = setCurrentRegistry(name);
+  const pkg = (info.msg.npm ? 'npm, ' : '') + (info.msg.yarn ? 'yarn' : '');
 
-  shelljs.echo('');
-  if (find) {
-    shelljs.exec(`npm config set registry ${find.registry}`)
-    shelljs.echo(`set registry ${find.registry}`);
-  } else {
-    shelljs.echo('not found', name);
-  }
-  shelljs.echo('');
+  const msg = info.find ?
+    `set ( ${ pkg } ) registry ${ info.find.registry }` :
+    `not found ${ name }`;
+
+  shelljs.echo(`\n ${ msg } \n`);
 }
 
 /**
  *
- * @param {string} name register name
- * @param {string} url register url
- * @param {string=} home register home page
+ * @param {string} name registry name
+ * @param {string} url registry url
+ * @param {string=} home registry home page
  */
 function onAdd(name, url, home) {
   const reg = {
     name,
-    register: url
+    registry: url
   };
 
   if (home !== undefined) {
     reg.home = home;
   }
 
-  const conf = getLocalConfig();
-  const foundIndex = conf.registries.findIndex(r => r.name === reg.name);
+  addRegistry(reg);
 
-  if (foundIndex !== -1) {
-    conf.registries[foundIndex] = reg;
-  } else {
-    conf.registries.push(reg);
-  }
-
-  saveConfig(conf);
-
-  shelljs.echo(`\n add registry ${name} -- ${url}\n`);
+  shelljs.echo(`\n add registry ${ name } -- ${ url }\n`);
 }
 
 /**
  *
- * @param {string} name register name
+ * @param {string} name registry name
  */
 function onDel(name) {
-  const conf = getLocalConfig();
-  const index = conf.registries.findIndex(r => r.name === name);
-  const remove = config.registries[index];
+  const msg = delRegistry(name) ?
+    `delete registry ${ remove.name } -- ${ remove.registry }` :
+    `not found ${ name } registry`;
 
-  if (index !== -1) {
-    conf.registries.splice(index, 1);
-  }
-
-  saveConfig(conf);
-
-  if (remove) {
-    shelljs.echo(`\n delete registry ${remove.name} -- ${remove.registry}\n`);
-  } else {
-    shelljs.echo(`\n not found ${name} registry\n`);
-  }
-
+  shelljs.echo(`\n ${ msg }\n`);
 }
 
 function onHelp() {
@@ -155,6 +140,78 @@ function onHelp() {
 }
 
 // ------------------------------------
+
+/**
+ *
+ * @param {string} cmd
+ */
+function exec(cmd) {
+  if (DEBUG) {
+    shelljs.echo('Command is', cmd);
+  }
+
+  const result = shelljs.exec(cmd, {
+    silent: true
+  });
+
+  if (result.stderr) {
+    shelljs.echo('Error ', result.stderr);
+  }
+
+  return result;
+}
+
+/**
+ *
+ * @param {string} cmd command
+ * @param {string=} type Pkg type, one of [yarn, npm], exec both if null
+ */
+function execPkgManagerCommand(cmd, type) {
+  const types = ['npm', 'yarn'];
+  type = types.find(t => t === type);
+
+  const execTypes = type ? [type] : types;
+
+  const msg = {
+    npm: false,
+    yarn: false
+  };
+
+  execTypes.forEach(t => {
+    if (shelljs.which(t)) {
+      const result = exec(`${ t } ${ cmd }`);
+      msg[t] = !result.stderr && (result.stdout || true);
+    } else {
+      shelljs.echo(`not found ${ t } command`)
+    }
+  })
+
+  return msg;
+}
+
+function getCurrentRegistry() {
+  return execPkgManagerCommand('config get registry');
+}
+
+/**
+ *
+ * @param {string} name registry name
+ */
+function setCurrentRegistry(name) {
+  const regs = getRegistries().all;
+  const find = regs.find(r => r.name === name);
+
+  let msg = null;
+
+  if (find) {
+    msg = execPkgManagerCommand(`config set registry ${ find.registry }`)
+  }
+
+  return {
+    find,
+    msg
+  };
+}
 
 function getLocalConfig() {
   let configs = {
@@ -187,19 +244,56 @@ function clearLocalConfig() {
 }
 
 function getRegistries() {
-  const regs = getLocalConfig().registries || [];
+  const localRegistries = getLocalConfig().registries || [];
 
-  return config.registries.concat(regs);
+  return {
+    local: localRegistries,
+    default: config.registries,
+    all: config.registries.concat(localRegistries)
+  };
 }
 
+/**
+ *
+ * @param {object} reg
+ * @param {string} reg.name registry name
+ * @param {string} reg.url registry url
+ * @param {string=} reg.home registry home page
+ */
+function addRegistry(reg) {
+  const conf = getLocalConfig();
+  const foundIndex = conf.registries.findIndex(r => r.name === reg.name);
+
+  if (foundIndex !== -1) {
+    conf.registries[foundIndex] = reg;
+  } else {
+    conf.registries.push(reg);
+  }
+
+  saveConfig(conf);
+}
+
+/**
+ *
+ * @param {string} name registry name
+ */
+function delRegistry(name) {
+  const conf = getLocalConfig();
+  const index = conf.registries.findIndex(r => r.name === name);
+
+  if (index !== -1) {
+    conf.registries.splice(index, 1);
+    saveConfig(conf);
+  }
+
+  return index !== -1;
+}
 
 module.exports = {
-  onLs,
-  onCurrent,
-  onUse,
-  onAdd,
-  onDel,
-  onHelp,
+  addRegistry,
+  delRegistry,
+  setCurrentRegistry,
+  getCurrentRegistry,
   clearLocalConfig,
   getRegistries
 }
