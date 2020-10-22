@@ -23,10 +23,12 @@
   "homepage": "https://github.com/cwxyz007/onrm",
   "license": "MIT",
   "dependencies": {
+    "inquirer": "^7.3.3",
     "minimist": "^1.2.5",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
+    "@types/inquirer": "^7.3.1",
     "@types/minimist": "^1.2.0",
     "@types/shelljs": "^0.8.8",
     "@typescript-eslint/eslint-plugin": "^4.5.0",

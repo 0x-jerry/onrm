@@ -2,42 +2,39 @@ import path from 'path'
 import fs from 'fs'
 import os from 'os'
 
-interface RegistryConfig {
-  name: string
+export interface RegistryConfig {
   registry: string
   home?: string
 }
 
-interface ONRMConfig {
-  registries: RegistryConfig[]
+export interface ONRMConfig {
+  version: number
+  registries: Record<string, RegistryConfig>
 }
 
 const ONRMRC = path.join(os.homedir(), '.onrmrc')
 
 export function defaultConfig(): ONRMConfig {
   return {
-    registries: [
-      {
-        name: 'npm',
+    version: 1,
+    registries: {
+      npm: {
         home: 'https://www.npmjs.org',
         registry: 'https://registry.npmjs.org/'
       },
-      {
-        name: 'yarn',
+      yarn: {
         home: 'https://yarnpkg.com',
         registry: 'https://registry.yarnpkg.com/'
       },
-      {
-        name: 'taobao',
+      taobao: {
         home: 'https://npm.taobao.org',
         registry: 'https://registry.npm.taobao.org/'
       },
-      {
-        name: 'github',
+      github: {
         home: 'https://github.com/features/packages',
         registry: 'https://npm.pkg.github.com'
       }
-    ]
+    }
   }
 }
 
@@ -53,7 +50,9 @@ export function getConfig(): ONRMConfig {
 
     const localConf = JSON.parse(str)
 
-    Object.assign(conf, localConf)
+    if (localConf.version === 1) {
+      Object.assign(conf, localConf)
+    }
   }
 
   return conf
