@@ -14,6 +14,16 @@ class Yarn implements RegistryManager {
       return true
     }
   }
+
+  getConfig(key: string): string {
+    if (!this.isExist()) {
+      return ''
+    }
+
+    const res = shelljs.exec(`yarn config get ${key}`, { silent: true })
+
+    return res.stdout.trim()
+  }
 }
 
 export const yarn = new Yarn()

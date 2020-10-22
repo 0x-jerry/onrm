@@ -9,6 +9,11 @@ export const actions = {
   ls
 }
 
+const managers: Record<string, RegistryManager> = {
+  npm,
+  yarn
+}
+
 async function add(name: string, registry: string, homeUrl: string = '') {
   const currentConf: RegistryConfig = {
     registry,
@@ -51,11 +56,6 @@ function del(name: string) {
 }
 
 function use(name: string, type?: 'npm' | 'yarn') {
-  const managers: Record<string, RegistryManager> = {
-    npm,
-    yarn
-  }
-
   const conf = getConfig()
   const registryConf = conf.registries[name]
 
@@ -81,6 +81,11 @@ function use(name: string, type?: 'npm' | 'yarn') {
 
 function ls() {
   const conf = getConfig()
+
+  for (const key in managers) {
+    const manager = managers[key]
+    console.log(key, manager.getConfig('registry'))
+  }
 
   console.log(conf.registries)
 }

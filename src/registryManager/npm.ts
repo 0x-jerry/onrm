@@ -14,6 +14,16 @@ class Npm implements RegistryManager {
       return true
     }
   }
+
+  getConfig(key: string): string {
+    if (!this.isExist()) {
+      return ''
+    }
+
+    const res = shelljs.exec(`npm config get ${key}`, { silent: true })
+
+    return res.stdout.trim()
+  }
 }
 
 export const npm = new Npm()
