@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "outDir": "dist",
+    "target": "ES2018",
+    "module": "CommonJS",
+    "declaration": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src"]
+}

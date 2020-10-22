@@ -1,33 +1,46 @@
 {
   "name": "onrm",
   "version": "1.0.7",
-  "main": "./bin/onrm.js",
-  "bin": "./bin/onrm.js",
-  "author": "Gem Xli <x.li.gem@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:cwxyz007/onrm.git"
+  "main": "./dist/core.js",
+  "bin": {
+    "onrm": "bin/onrm.js"
   },
+  "author": "Gem Xli <x.li.gem@gmail.com>",
+  "repository": "git@github.com:cwxyz007/onrm.git",
   "bugs": {
     "url": "https://github.com/cwxyz007/onrm/issues/new"
   },
   "keywords": [
     "NPM",
+    "YARN",
     "registry"
   ],
   "scripts": {
-    "test": "mocha",
-    "dev": "node bin/onrm.js"
+    "test": "jest",
+    "dev": "ts-node src/cli.ts",
+    "build": "rimraf dist && tsc --build tsconfig.build.json"
   },
   "homepage": "https://github.com/cwxyz007/onrm",
   "license": "MIT",
   "dependencies": {
-    "commander": "^5.1.0",
+    "minimist": "^1.2.5",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^7.2.0",
-    "mocha": "^7.2.0"
+    "@types/minimist": "^1.2.0",
+    "@types/shelljs": "^0.8.8",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-standard": "^15.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.2",
+    "jest": "^26.6.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
   }
 }
