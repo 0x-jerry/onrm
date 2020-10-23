@@ -55,11 +55,7 @@ function printLine(row: string[]) {
 }
 
 function highlight(str: string) {
-  const url = /^https?:\/\//
+  const url = /https?:\/\/[^\s]+/g
 
-  if (url.test(str.trim())) {
-    return chalk.green(str)
-  }
-
-  return str
+  return str.replace(url, (s) => chalk.green(s))
 }
