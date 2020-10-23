@@ -12,7 +12,6 @@ export abstract class RegistryManager {
   isExist(): boolean {
     if (this._isExist === undefined) {
       this._isExist = this.checkIsExist()
-      return this._isExist
     }
 
     return this._isExist
