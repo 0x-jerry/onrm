@@ -1,4 +1,4 @@
-import { getConfig, ONRMRC, RegistryConfig, saveConfig } from './config'
+import { getConfig, ONRMConfig, ONRMRC, RegistryConfig, saveConfig } from './config'
 import inquirer from 'inquirer'
 import { npm, RegistryManager, yarn } from './registryManager'
 import chalk from 'chalk'
@@ -64,8 +64,8 @@ function use(name: string, type?: 'npm' | 'yarn') {
   const registryConf = conf.registries[name]
 
   if (!registryConf) {
-    console.log(`Not found registry named ${name}`)
-    ls()
+    console.log(`Not found registry named [${name}]!\n`)
+    _printRegistry(conf.registries)
     return
   }
 
@@ -80,12 +80,10 @@ function use(name: string, type?: 'npm' | 'yarn') {
     manager.setConfig('registry', registryConf.registry)
   }
 
-  console.log(`Set registry(${name}) for [${Object.keys(managers).join(',')}] successful!`)
+  console.log(`Set registry(${name}) for [${Object.keys(managers).join(', ')}] successful!`)
 }
 
-function ls() {
-  const conf = getConfig()
-
+function _printRegistry(registries: ONRMConfig['registries']) {
   const table: string[][] = []
 
   const used: { type: string; registry: string }[] = []
@@ -100,8 +98,8 @@ function ls() {
 
   table.push(['*', 'Name', 'Registry', 'Home url', 'Used by'])
 
-  for (const key in conf.registries) {
-    const registryConf = conf.registries[key]
+  for (const key in registries) {
+    const registryConf = registries[key]
 
     const usedBy = used
       .filter((u) => u.registry === registryConf.registry)
@@ -112,6 +110,11 @@ function ls() {
   }
 
   printTable(table)
+}
+
+function ls() {
+  const conf = getConfig()
+  _printRegistry(conf.registries)
 }
 
 function config() {
