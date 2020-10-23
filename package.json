@@ -22,7 +22,7 @@
     "prepublishOnly": "yarn build"
   },
   "publishConfig": {
-    "registry": "https://www.npmjs.org"
+    "registry": "https://registry.npmjs.org/"
   },
   "homepage": "https://github.com/cwxyz007/onrm",
   "license": "MIT",
