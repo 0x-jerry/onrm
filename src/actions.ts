@@ -12,8 +12,8 @@ const managers: Record<string, RegistryManager> = {
 
 async function add(name: string, registry: string, homeUrl: string = '') {
   const currentConf: RegistryConfig = {
-    registry,
-    home: homeUrl
+    registry: String(registry),
+    home: String(homeUrl)
   }
 
   const conf = getConfig()
@@ -26,19 +26,21 @@ async function add(name: string, registry: string, homeUrl: string = '') {
       type: 'confirm',
       default: true
     })
-
     console.log()
-    if (!answer.isOverride) {
-      ls()
-      return
-    } else {
+
+    if (answer.isOverride) {
       Object.assign(existConf, currentConf)
+      saveConfig(conf)
+
       console.log(`Update registry [${chalk.blue(name)}](${chalk.green(registry)}) successful.`)
       return
     }
-  } else {
-    conf.registries[name] = currentConf
+
+    ls()
+    return
   }
+
+  conf.registries[name] = currentConf
 
   saveConfig(conf)
   console.log(`Add registry [${chalk.blue(name)}](${chalk.green(registry)}) successful.`)
