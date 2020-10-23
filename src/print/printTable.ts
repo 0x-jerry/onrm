@@ -20,6 +20,7 @@ function uniformTable(table: string[][]) {
     const uniformedRow: string[] = []
 
     row.forEach((s, idx) => {
+      // if first column is a single character, do not add padding space
       if (s.length <= 1 && idx === 0) {
         uniformedRow[idx] = s.padEnd(1, ' ')
         return
