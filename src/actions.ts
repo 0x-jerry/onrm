@@ -98,7 +98,7 @@ function ls() {
     })
   }
 
-  table.push(['Name', 'Registry', 'Home url', 'Used by'])
+  table.push(['*', 'Name', 'Registry', 'Home url', 'Used by'])
 
   for (const key in conf.registries) {
     const registryConf = conf.registries[key]
@@ -108,7 +108,7 @@ function ls() {
       .map((u) => u.type)
       .join(', ')
 
-    table.push([key, registryConf.registry, registryConf.home || '', usedBy])
+    table.push([usedBy ? '*' : '', key, registryConf.registry, registryConf.home || '', usedBy])
   }
 
   printTable(table)

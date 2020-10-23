@@ -20,7 +20,11 @@ function uniformTable(table: string[][]) {
     const uniformedRow: string[] = []
 
     row.forEach((s, idx) => {
-      s = ' ' + s
+      if (s.length <= 1 && idx === 0) {
+        uniformedRow[idx] = s.padEnd(1, ' ')
+        return
+      }
+
       uniformedRow[idx] = s.padEnd(colLens[idx], ' ')
     })
 
