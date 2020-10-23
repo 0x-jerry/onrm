@@ -24,7 +24,9 @@ class Yarn extends RegistryManager {
       return ''
     }
 
-    return this.exec(`yarn config get ${key}`)
+    const stdout = this.exec(`yarn config get ${key}`)
+
+    return stdout.replace('warning package.json: No license field', '').trim()
   }
 }
 
