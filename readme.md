@@ -19,6 +19,8 @@ $ yarn global add onrm
 
 ## Example
 
+TODO: Add example gif.
+
 ## Usage
 
 ```
