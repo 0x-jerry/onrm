@@ -88,11 +88,27 @@ function ls() {
 
   const table: string[][] = []
 
-  table.push(['Name', 'Registry', 'Home url'])
+  const used: { type: string; registry: string }[] = []
+
+  for (const key in managers) {
+    const manager = managers[key]
+    used.push({
+      type: key,
+      registry: manager.getConfig('registry')
+    })
+  }
+
+  table.push(['Name', 'Registry', 'Home url', 'Used by'])
 
   for (const key in conf.registries) {
-    const registry = conf.registries[key]
-    table.push([key, registry.registry, registry.home || ''])
+    const registryConf = conf.registries[key]
+
+    const usedBy = used
+      .filter((u) => u.registry === registryConf.registry)
+      .map((u) => u.type)
+      .join(', ')
+
+    table.push([key, registryConf.registry, registryConf.home || '', usedBy])
   }
 
   printTable(table)

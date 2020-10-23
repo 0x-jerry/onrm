@@ -28,8 +28,7 @@ function resolveArgv(argv: any = {}) {
 }
 
 function printUsage() {
-  console.log(`
-  Usage: onrm [options] [command]
+  console.log(`  Usage: onrm [options] [command]
 
   Options:
 
