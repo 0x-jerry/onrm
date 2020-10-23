@@ -1,16 +1,16 @@
-import { RegistryManager } from './type'
+import { RegistryManager } from './base'
 import shelljs from 'shelljs'
 
-class Npm implements RegistryManager {
-  isExist(): boolean {
-    return true
+class Npm extends RegistryManager {
+  protected checkIsExist(): boolean {
+    return !!shelljs.which('npm')
   }
 
   setConfig(key: string, value: string): boolean {
     if (!this.isExist()) {
       return false
     } else {
-      shelljs.exec(`npm config set ${key} ${value}`)
+      this.exec(`npm config set ${key} ${value}`)
       return true
     }
   }
@@ -20,9 +20,11 @@ class Npm implements RegistryManager {
       return ''
     }
 
-    const res = shelljs.exec(`npm config get ${key}`, { silent: true })
+    return this.exec(`npm config get ${key}`)
+  }
 
-    return res.stdout.trim()
+  getVersion(): string {
+    return this.isExist() ? this.exec('npm -v') : ''
   }
 }
 

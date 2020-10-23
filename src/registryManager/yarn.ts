@@ -1,16 +1,20 @@
-import { RegistryManager } from './type'
+import { RegistryManager } from './base'
 import shelljs from 'shelljs'
 
-class Yarn implements RegistryManager {
-  isExist(): boolean {
+class Yarn extends RegistryManager {
+  protected checkIsExist(): boolean {
     return !!shelljs.which('yarn')
+  }
+
+  getVersion(): string {
+    return this.exec('yarn -v')
   }
 
   setConfig(key: string, value: string): boolean {
     if (!this.isExist()) {
       return false
     } else {
-      shelljs.exec(`yarn config set ${key} ${value}`)
+      this.exec(`yarn config set ${key} ${value}`)
       return true
     }
   }
@@ -20,9 +24,7 @@ class Yarn implements RegistryManager {
       return ''
     }
 
-    const res = shelljs.exec(`yarn config get ${key}`, { silent: true })
-
-    return res.stdout.trim()
+    return this.exec(`yarn config get ${key}`)
   }
 }
 

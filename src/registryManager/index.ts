@@ -1,3 +1,3 @@
-export * from './type'
+export * from './base'
 export * from './npm'
 export * from './yarn'
