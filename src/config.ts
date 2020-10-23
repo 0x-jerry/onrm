@@ -39,7 +39,7 @@ export function defaultConfig(): ONRMConfig {
 }
 
 export function saveConfig(conf: ONRMConfig) {
-  fs.writeFileSync(ONRMRC, JSON.stringify(conf))
+  fs.writeFileSync(ONRMRC, JSON.stringify(conf, null, 2))
 }
 
 export function getConfig(): ONRMConfig {
@@ -54,6 +54,7 @@ export function getConfig(): ONRMConfig {
       Object.assign(conf, localConf)
     }
   }
+  saveConfig(conf)
 
   return conf
 }
