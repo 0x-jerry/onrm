@@ -18,7 +18,11 @@
   "scripts": {
     "test": "jest",
     "dev": "ts-node src/cli.ts",
-    "build": "rimraf dist && tsc --build tsconfig.build.json"
+    "build": "rimraf dist && tsc --build tsconfig.build.json",
+    "prepublishOnly": "yarn build"
+  },
+  "publishConfig": {
+    "registry": "https://www.npmjs.org"
   },
   "homepage": "https://github.com/cwxyz007/onrm",
   "license": "MIT",
