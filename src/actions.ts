@@ -5,14 +5,6 @@ import chalk from 'chalk'
 import { printTable } from './print'
 import highlight from 'cli-highlight'
 
-export const actions = {
-  add,
-  use,
-  del,
-  ls,
-  config
-}
-
 const managers: Record<string, RegistryManager> = {
   npm,
   yarn
@@ -29,20 +21,27 @@ async function add(name: string, registry: string, homeUrl: string = '') {
 
   if (existConf) {
     const answer = await inquirer.prompt({
-      message: `Found exist registry [${name}], override it ?`,
+      message: `Found exist registry [${chalk.blue(name)}], override it ?`,
       name: 'isOverride',
       type: 'confirm',
       default: true
     })
 
-    if (answer.isOverride) {
+    console.log()
+    if (!answer.isOverride) {
+      ls()
+      return
+    } else {
       Object.assign(existConf, currentConf)
+      console.log(`Update registry [${chalk.blue(name)}](${chalk.green(registry)}) successful.`)
+      return
     }
   } else {
     conf.registries[name] = currentConf
   }
 
   saveConfig(conf)
+  console.log(`Add registry [${chalk.blue(name)}](${chalk.green(registry)}) successful.`)
 }
 
 function del(name: string) {
@@ -50,13 +49,14 @@ function del(name: string) {
 
   const exist = conf.registries[name]
   if (!exist) {
-    console.log(`Not found registry for [${name}].`)
+    console.log(`Not found registry for [${chalk.blue(name)}].\n`)
+    _printRegistry(conf.registries)
     return
   }
 
   delete conf.registries[name]
   saveConfig(conf)
-  console.log(`Delete registry [${name}] successful.`)
+  console.log(`Delete registry [${chalk.blue(name)}](${chalk.green(exist.registry)}) successful.`)
 }
 
 function use(name: string, type?: 'npm' | 'yarn') {
@@ -80,7 +80,10 @@ function use(name: string, type?: 'npm' | 'yarn') {
     manager.setConfig('registry', registryConf.registry)
   }
 
-  console.log(`Set registry(${name}) for [${Object.keys(managers).join(', ')}] successful!`)
+  console.log(
+    `Set registry(${chalk.blue(`${name}-${registryConf.registry}`)}) for` +
+      ` [${chalk.green(Object.keys(managers).join(', '))}] successful!`
+  )
 }
 
 function _printRegistry(registries: ONRMConfig['registries']) {
@@ -102,7 +105,7 @@ function _printRegistry(registries: ONRMConfig['registries']) {
     const registryConf = registries[key]
 
     const usedBy = used
-      .filter((u) => u.registry === registryConf.registry)
+      .filter((u) => u.registry.replace(/\/$/, '') === registryConf.registry.replace(/\/$/, ''))
       .map((u) => u.type)
       .join(', ')
 
@@ -123,4 +126,12 @@ function config() {
   console.log('Config path:', chalk.green(ONRMRC), '\n')
 
   console.log(highlight(JSON.stringify(conf, null, 2), { language: 'json', ignoreIllegals: true }))
+}
+
+export const actions = {
+  add,
+  use,
+  del,
+  ls,
+  config
 }
