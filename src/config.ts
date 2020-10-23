@@ -12,7 +12,7 @@ export interface ONRMConfig {
   registries: Record<string, RegistryConfig>
 }
 
-const ONRMRC = path.join(os.homedir(), '.onrmrc')
+export const ONRMRC = path.join(os.homedir(), '.onrmrc')
 
 export function defaultConfig(): ONRMConfig {
   return {

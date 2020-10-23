@@ -2,6 +2,7 @@ import minimist from 'minimist'
 import fs from 'fs'
 import path from 'path'
 import { actions } from './actions'
+import chalk from 'chalk'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -10,7 +11,7 @@ resolveArgv(argv)
 function resolveArgv(argv: any = {}) {
   const { help, h } = argv
   const [actionName, ...params] = argv._
-  console.log(`onrm v${getVersion()}`)
+  console.log(chalk.cyan(`onrm v${getVersion()}`), '\n')
 
   if (help || h || !actionName) {
     printUsage()
@@ -37,6 +38,7 @@ function printUsage() {
   Commands:
 
     ls                            List all the registries
+    config                        Output config file place, and content
     use <name> [type]             Change registry to registry, type is one of [yarn, npm]
     add <name> <registry> [home]  Add one custom registry
     del <name>                    Delete one custom registry

@@ -1,12 +1,16 @@
-import { getConfig, RegistryConfig, saveConfig } from './config'
+import { getConfig, ONRMRC, RegistryConfig, saveConfig } from './config'
 import inquirer from 'inquirer'
 import { npm, RegistryManager, yarn } from './registryManager'
+import chalk from 'chalk'
+import { printTable } from './print'
+import highlight from 'cli-highlight'
 
 export const actions = {
   add,
   use,
   del,
-  ls
+  ls,
+  config
 }
 
 const managers: Record<string, RegistryManager> = {
@@ -82,10 +86,22 @@ function use(name: string, type?: 'npm' | 'yarn') {
 function ls() {
   const conf = getConfig()
 
-  for (const key in managers) {
-    const manager = managers[key]
-    console.log(key, manager.getConfig('registry'))
+  const table: string[][] = []
+
+  table.push(['Name', 'Registry', 'Home url'])
+
+  for (const key in conf.registries) {
+    const registry = conf.registries[key]
+    table.push([key, registry.registry, registry.home || ''])
   }
 
-  console.log(conf.registries)
+  printTable(table)
+}
+
+function config() {
+  const conf = getConfig()
+
+  console.log('Config path:', chalk.green(ONRMRC), '\n')
+
+  console.log(highlight(JSON.stringify(conf, null, 2), { language: 'json', ignoreIllegals: true }))
 }
