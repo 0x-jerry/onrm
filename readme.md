@@ -16,7 +16,7 @@ $ yarn global add onrm
 
 ## Example
 
-TODO: Add example gif.
+![example](./assets/example.gif)
 
 ## Usage
 
