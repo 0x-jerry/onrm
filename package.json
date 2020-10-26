@@ -15,6 +15,10 @@
     "YARN",
     "registry"
   ],
+  "files": [
+    "bin",
+    "dist"
+  ],
   "scripts": {
     "dev": "ts-node src/cli.ts",
     "build": "rimraf dist && tsc --build tsconfig.build.json",
