@@ -46,7 +46,7 @@ async function add(name: string, registry: string, homeUrl: string = '') {
   console.log(`Add registry [${chalk.yellow(name)}](${chalk.green(registry)}) successful.`)
 }
 
-function del(name: string) {
+function rm(name: string) {
   const conf = getConfig()
 
   const exist = conf.registries[name]
@@ -59,6 +59,22 @@ function del(name: string) {
   delete conf.registries[name]
   saveConfig(conf)
   console.log(`Delete registry [${chalk.yellow(name)}](${chalk.green(exist.registry)}) successful.`)
+}
+
+function rename(oldName: string, newName: string) {
+  const conf = getConfig()
+
+  const exist = conf.registries[oldName]
+  if (!exist) {
+    console.log(`Not found registry for [${chalk.yellow(oldName)}].\n`)
+    _printRegistry(conf.registries)
+    return
+  }
+
+  conf.registries[newName] = conf.registries[oldName]
+  delete conf.registries[oldName]
+  saveConfig(conf)
+  console.log(`Rename [${chalk.yellow(oldName)}] to [${chalk.green(newName)}] successful.`)
 }
 
 function use(name: string, type?: 'npm' | 'yarn') {
@@ -133,7 +149,8 @@ function config() {
 export const actions = {
   add,
   use,
-  del,
+  rm,
+  rename,
   ls,
   config
 }

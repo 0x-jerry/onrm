@@ -30,8 +30,9 @@ $ yarn global add onrm
   Commands:
 
     ls                            List all the registries
-    config                        Output onrm config content
+    config                        Output config file path, and content
     use <name> [type]             Change registry to registry, type is one of [yarn, npm]
     add <name> <registry> [home]  Add one custom registry
-    del <name>                    Delete one custom registry
+    rm <name>                     Delete one custom registry
+    rename <old name> <new name>  Rename exist registry
 ```
