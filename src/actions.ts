@@ -21,7 +21,7 @@ async function add(name: string, registry: string, homeUrl: string = '') {
 
   if (existConf) {
     const answer = await inquirer.prompt({
-      message: `Found exist registry [${chalk.blue(name)}], override it ?`,
+      message: `Found exist registry [${chalk.yellow(name)}], override it ?`,
       name: 'isOverride',
       type: 'confirm',
       default: true
@@ -32,7 +32,7 @@ async function add(name: string, registry: string, homeUrl: string = '') {
       Object.assign(existConf, currentConf)
       saveConfig(conf)
 
-      console.log(`Update registry [${chalk.blue(name)}](${chalk.green(registry)}) successful.`)
+      console.log(`Update registry [${chalk.yellow(name)}](${chalk.green(registry)}) successful.`)
       return
     }
 
@@ -43,7 +43,7 @@ async function add(name: string, registry: string, homeUrl: string = '') {
   conf.registries[name] = currentConf
 
   saveConfig(conf)
-  console.log(`Add registry [${chalk.blue(name)}](${chalk.green(registry)}) successful.`)
+  console.log(`Add registry [${chalk.yellow(name)}](${chalk.green(registry)}) successful.`)
 }
 
 function del(name: string) {
@@ -51,14 +51,14 @@ function del(name: string) {
 
   const exist = conf.registries[name]
   if (!exist) {
-    console.log(`Not found registry for [${chalk.blue(name)}].\n`)
+    console.log(`Not found registry for [${chalk.yellow(name)}].\n`)
     _printRegistry(conf.registries)
     return
   }
 
   delete conf.registries[name]
   saveConfig(conf)
-  console.log(`Delete registry [${chalk.blue(name)}](${chalk.green(exist.registry)}) successful.`)
+  console.log(`Delete registry [${chalk.yellow(name)}](${chalk.green(exist.registry)}) successful.`)
 }
 
 function use(name: string, type?: 'npm' | 'yarn') {
@@ -73,7 +73,7 @@ function use(name: string, type?: 'npm' | 'yarn') {
 
   if (type) {
     managers[type].setConfig('registry', registryConf.registry)
-    console.log(`Set registry(${name}) for [${type}] successful!`)
+    console.log(`Set registry(${chalk.yellow(name)}) for [${chalk.green(type)}] successful!`)
     return
   }
 
@@ -83,7 +83,7 @@ function use(name: string, type?: 'npm' | 'yarn') {
   }
 
   console.log(
-    `Set registry(${chalk.blue(`${name}-${registryConf.registry}`)}) for` +
+    `Set registry(${chalk.yellow(`${name}-${registryConf.registry}`)}) for` +
       ` [${chalk.green(Object.keys(managers).join(', '))}] successful!`
   )
 }
