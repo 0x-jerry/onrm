@@ -7,7 +7,7 @@ class Yarn extends RegistryManager {
   }
 
   getVersion(): string {
-    return this.exec('yarn -v')
+    return this.isExist() ? this.exec('yarn -v') : ''
   }
 
   setConfig(key: string, value: string): boolean {

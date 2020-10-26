@@ -22,9 +22,12 @@ function resolveArgv(argv: any = {}) {
 
   const action: Function | undefined = actions[actionName as ACTIONS]
 
-  if (action) {
-    action(...params)
+  if (!action) {
+    printUsage()
+    return
   }
+
+  action(...params)
 }
 
 function printUsage() {
