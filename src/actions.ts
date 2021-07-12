@@ -82,7 +82,7 @@ function use(name: string, type?: 'npm' | 'yarn') {
   const registryConf = conf.registries[name]
 
   if (!registryConf) {
-    console.log(`Not found registry named [${name}]!\n`)
+    console.log(`Not found registry named [${chalk.yellow(name)}]!\n`)
     _printRegistry(conf.registries)
     return
   }
@@ -99,7 +99,7 @@ function use(name: string, type?: 'npm' | 'yarn') {
   }
 
   console.log(
-    `Set registry(${chalk.yellow(`${name}-${registryConf.registry}`)}) for` +
+    `Set registry(${chalk.yellow(`${name} - ${registryConf.registry}`)}) for` +
       ` [${chalk.green(Object.keys(managers).join(', '))}] successful!`
   )
 }
