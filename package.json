@@ -5,8 +5,8 @@
   "bin": {
     "onrm": "bin/onrm.js"
   },
-  "author": "Gem Xli <x.li.gem@gmail.com>",
-  "repository": "git@github.com:cwxyz007/onrm.git",
+  "repository": "git@github.com:0x-jerry/onrm.git",
+  "author": "0x-jerry <x.jerry.wang@gmail.com>",
   "bugs": {
     "url": "https://github.com/cwxyz007/onrm/issues/new"
   },

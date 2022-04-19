@@ -19,7 +19,7 @@ export function defaultConfig(): ONRMConfig {
     version: 1,
     registries: {
       npm: {
-        home: 'https://www.npmjs.org',
+        home: 'https://www.npmjs.com/',
         registry: 'https://registry.npmjs.org/'
       },
       yarn: {
@@ -27,8 +27,8 @@ export function defaultConfig(): ONRMConfig {
         registry: 'https://registry.yarnpkg.com/'
       },
       taobao: {
-        home: 'https://npm.taobao.org',
-        registry: 'https://registry.npm.taobao.org/'
+        home: 'https://npmmirror.com/',
+        registry: 'https://registry.npmmirror.com/'
       },
       github: {
         home: 'https://github.com/features/packages',
