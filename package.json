@@ -32,13 +32,13 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "cli-highlight": "^2.1.4",
-    "inquirer": "^8.0.0",
+    "inquirer": "^9.0.0",
     "minimist": "^1.2.6",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
-    "@types/inquirer": "^8.0.0",
+    "@types/inquirer": "^9.0.0",
     "@types/minimist": "^1.2.0",
     "@types/shelljs": "^0.8.8",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
