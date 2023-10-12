@@ -13,7 +13,7 @@ specifiers:
   eslint-config-standard: ^17.0.0
   eslint-plugin-import: ^2.22.1
   eslint-plugin-node: ^11.1.0
-  eslint-plugin-promise: ^4.2.1
+  eslint-plugin-promise: ^6.0.0
   eslint-plugin-standard: ^4.0.2
   inquirer: ^9.0.0
   minimist: ^1.2.6
@@ -37,10 +37,10 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 4.33.0_d65d675ad87a13575dfeadbae6d789c1
   '@typescript-eslint/parser': 4.33.0_eslint@8.18.0+typescript@5.2.2
   eslint: 8.18.0
-  eslint-config-standard: 17.0.0_98408c60c9232577312874df6297609d
+  eslint-config-standard: 17.0.0_5facab0cf3a4aa5ab0568bf264d9592d
   eslint-plugin-import: 2.26.0_ae2dc76dca264c69256e4bff6c826e93
   eslint-plugin-node: 11.1.0_eslint@8.18.0
-  eslint-plugin-promise: 4.3.1
+  eslint-plugin-promise: 6.1.1_eslint@8.18.0
   eslint-plugin-standard: 4.1.0_eslint@8.18.0
   rimraf: 3.0.2
   ts-node: 9.1.1_typescript@5.2.2
@@ -630,7 +630,7 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /eslint-config-standard/17.0.0_98408c60c9232577312874df6297609d:
+  /eslint-config-standard/17.0.0_5facab0cf3a4aa5ab0568bf264d9592d:
     resolution: {integrity: sha512-/2ks1GKyqSOkH7JFvXJicu0iMpoojkwB+f5Du/1SC0PtBL+s8v30k9njRZ21pm2drKYm2342jFnGWzttxPmZVg==}
     peerDependencies:
       eslint: ^8.0.1
@@ -640,7 +640,7 @@ packages:
     dependencies:
       eslint: 8.18.0
       eslint-plugin-import: 2.26.0_ae2dc76dca264c69256e4bff6c826e93
-      eslint-plugin-promise: 4.3.1
+      eslint-plugin-promise: 6.1.1_eslint@8.18.0
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
@@ -735,9 +735,13 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-plugin-promise/4.3.1:
-    resolution: {integrity: sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==}
-    engines: {node: '>=6'}
+  /eslint-plugin-promise/6.1.1_eslint@8.18.0:
+    resolution: {integrity: sha512-tjqWDwVZQo7UIPMeDReOpUgHCmCiH+ePnVT+5zVapL0uuHnegBUs2smM13CzOs2Xb5+MHMRFTs9v24yjba4Oig==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0
+    dependencies:
+      eslint: 8.18.0
     dev: true
 
   /eslint-plugin-standard/4.1.0_eslint@8.18.0:
