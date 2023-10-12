@@ -7,7 +7,7 @@ specifiers:
   '@types/shelljs': ^0.8.8
   '@typescript-eslint/eslint-plugin': ^4.5.0
   '@typescript-eslint/parser': ^4.5.0
-  chalk: ^4.1.0
+  chalk: ^5.0.0
   cli-highlight: ^2.1.4
   eslint: ^8.0.0
   eslint-config-standard: ^17.0.0
@@ -23,7 +23,7 @@ specifiers:
   typescript: ^5.0.0
 
 dependencies:
-  chalk: 4.1.2
+  chalk: 5.0.1
   cli-highlight: 2.1.11
   inquirer: 9.1.0
   minimist: 1.2.6
@@ -105,7 +105,7 @@ packages:
     resolution: {integrity: sha512-1zzPV9FDe1I/WHhRkf9SNgqtRJWZqrBWgu7JGveuHmmyR9CnAPCie2N/x+iHrgnpYBIcCJWHBoMRv2TRWktsvw==}
     deprecated: This is a stub types definition for chalk (https://github.com/chalk/chalk). chalk provides its own type definitions, so you don't need @types/chalk installed!
     dependencies:
-      chalk: 4.1.2
+      chalk: 5.0.1
     dev: true
 
   /@types/glob/7.2.0:
@@ -410,7 +410,6 @@ packages:
   /chalk/5.0.1:
     resolution: {integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-    dev: false
 
   /chardet/0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
