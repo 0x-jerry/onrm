@@ -2,7 +2,7 @@
 
 Another NPM registry manager, like the [nrm](https://github.com/Pana/nrm)
 
-- Support npm, yarn v1, and all other tools that read config from `.npmrc/.yarnrc`
+- Support npm, yarn v1, bun, and all other tools that read config from `.npmrc/.yarnrc`
 
 ## Install
 
