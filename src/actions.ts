@@ -3,7 +3,7 @@ import inquirer from 'inquirer'
 import { bun, npm, RegistryManager, yarn } from './registryManager'
 import chalk from 'chalk'
 import { printTable } from './print'
-import highlight from 'cli-highlight'
+import { highlight } from 'cli-highlight'
 
 const managers: Record<string, RegistryManager> = {
   npm,
