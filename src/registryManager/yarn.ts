@@ -10,21 +10,21 @@ class Yarn extends RegistryManager {
     return this.isExist() ? this.exec('yarn -v') : ''
   }
 
-  setConfig(key: string, value: string): boolean {
+  setRegistry(value: string): boolean {
     if (!this.isExist()) {
       return false
     } else {
-      this.exec(`yarn config set ${key} ${value}`)
+      this.exec(`yarn config set registry ${value}`)
       return true
     }
   }
 
-  getConfig(key: string): string {
+  getRegistry(): string {
     if (!this.isExist()) {
       return ''
     }
 
-    const stdout = this.exec(`yarn config get ${key}`)
+    const stdout = this.exec(`yarn config get registry`)
 
     return stdout.replace('warning package.json: No license field', '').trim()
   }

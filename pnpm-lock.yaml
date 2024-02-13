@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@iarna/toml':
+    specifier: ^2.2.5
+    version: 2.2.5
   chalk:
     specifier: ^5.3.0
     version: 5.3.0
@@ -25,6 +28,9 @@ devDependencies:
   '@0x-jerry/x-release':
     specifier: ^0.4.0
     version: 0.4.0
+  '@types/iarna__toml':
+    specifier: ^2.0.5
+    version: 2.0.5
   '@types/inquirer':
     specifier: ^9.0.7
     version: 9.0.7
@@ -277,6 +283,10 @@ packages:
     dev: true
     optional: true
 
+  /@iarna/toml@2.2.5:
+    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
+    dev: false
+
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -471,6 +481,12 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
+      '@types/node': 20.11.17
+    dev: true
+
+  /@types/iarna__toml@2.0.5:
+    resolution: {integrity: sha512-I55y+SxI0ayM4MBU6yfGJGmi4wRll6wtSeKiFYAZj+Z5Q1DVbMgBSVDYY+xQZbjIlLs/pN4fidnvR8faDrmxPg==}
+    dependencies:
       '@types/node': 20.11.17
     dev: true
 

@@ -3,8 +3,8 @@ import shelljs from 'shelljs'
 export abstract class RegistryManager {
   protected abstract checkIsExist(): boolean
 
-  abstract setConfig(key: string, value: string): boolean
-  abstract getConfig(key: string): string
+  abstract setRegistry(value: string): boolean
+  abstract getRegistry(): string
   abstract getVersion(): string
 
   private _isExist?: boolean

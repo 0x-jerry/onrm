@@ -1,13 +1,14 @@
 import { getConfig, type ONRMConfig, ONRMRC, type RegistryConfig, saveConfig } from './config'
 import inquirer from 'inquirer'
-import { npm, RegistryManager, yarn } from './registryManager'
+import { bun, npm, RegistryManager, yarn } from './registryManager'
 import chalk from 'chalk'
 import { printTable } from './print'
 import highlight from 'cli-highlight'
 
 const managers: Record<string, RegistryManager> = {
   npm,
-  yarn
+  yarn,
+  bun
 }
 
 async function add(name: string, registry: string, homeUrl: string = '') {
@@ -88,14 +89,14 @@ function use(name: string, type?: 'npm' | 'yarn') {
   }
 
   if (type) {
-    managers[type].setConfig('registry', registryConf.registry)
+    managers[type].setRegistry(registryConf.registry)
     console.log(`Set registry(${chalk.yellow(name)}) for [${chalk.green(type)}] successful!`)
     return
   }
 
   for (const key in managers) {
     const manager = managers[key]
-    manager.setConfig('registry', registryConf.registry)
+    manager.setRegistry(registryConf.registry)
   }
 
   console.log(
@@ -113,7 +114,7 @@ function _printRegistry(registries: ONRMConfig['registries']) {
     const manager = managers[key]
     used.push({
       type: key,
-      registry: manager.getConfig('registry')
+      registry: manager.getRegistry()
     })
   }
 

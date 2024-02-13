@@ -6,21 +6,21 @@ class Npm extends RegistryManager {
     return !!shelljs.which('npm')
   }
 
-  setConfig(key: string, value: string): boolean {
+  setRegistry(value: string): boolean {
     if (!this.isExist()) {
       return false
     } else {
-      this.exec(`npm config set ${key} ${value}`)
+      this.exec(`npm config set registry ${value}`)
       return true
     }
   }
 
-  getConfig(key: string): string {
+  getRegistry(): string {
     if (!this.isExist()) {
       return ''
     }
 
-    return this.exec(`npm config get ${key}`)
+    return this.exec(`npm config get registry`)
   }
 
   getVersion(): string {
