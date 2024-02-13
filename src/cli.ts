@@ -40,7 +40,7 @@ function printUsage() {
 
     ls                            List all the registries
     config                        Output config file path, and content
-    use <name> [type]             Change registry to registry, type is one of [yarn, npm]
+    use <name> [type]             Change registry to registry, type is one of [yarn, npm, bun]
     add <name> <registry> [home]  Add one custom registry
     rm <name>                     Delete one custom registry
     rename <old name> <new name>  Rename exist registry
