@@ -1,4 +1,4 @@
-import { getConfig, ONRMConfig, ONRMRC, RegistryConfig, saveConfig } from './config'
+import { getConfig, type ONRMConfig, ONRMRC, type RegistryConfig, saveConfig } from './config'
 import inquirer from 'inquirer'
 import { npm, RegistryManager, yarn } from './registryManager'
 import chalk from 'chalk'

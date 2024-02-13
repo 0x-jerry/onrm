@@ -5,10 +5,11 @@
   "bin": {
     "onrm": "bin/onrm.js"
   },
+  "type": "module",
   "repository": "git@github.com:0x-jerry/onrm.git",
   "author": "0x-jerry <x.jerry.wang@gmail.com>",
   "bugs": {
-    "url": "https://github.com/cwxyz007/onrm/issues/new"
+    "url": "https://github.com/0x-jerry/onrm/issues/new"
   },
   "keywords": [
     "NPM",
@@ -20,37 +21,28 @@
     "dist"
   ],
   "scripts": {
-    "dev": "ts-node src/cli.ts",
-    "build": "rimraf dist && tsc --build tsconfig.build.json",
-    "prepublishOnly": "yarn build"
+    "dev": "tsx src/cli.ts",
+    "build": "tsup src/cli.ts --format esm",
+    "prepublishOnly": "npm run build"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "homepage": "https://github.com/cwxyz007/onrm",
+  "homepage": "https://github.com/0x-jerry/onrm",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^4.1.0",
-    "cli-highlight": "^2.1.4",
-    "inquirer": "^9.0.0",
-    "minimist": "^1.2.6",
+    "chalk": "^5.3.0",
+    "cli-highlight": "^2.1.11",
+    "inquirer": "^9.2.14",
+    "minimist": "^1.2.8",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
-    "@types/inquirer": "^9.0.0",
-    "@types/minimist": "^1.2.0",
-    "@types/shelljs": "^0.8.8",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint": "^8.0.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.2",
-    "rimraf": "^3.0.2",
-    "ts-node": "^9.0.0",
-    "typescript": "^5.0.0"
+    "@types/inquirer": "^9.0.7",
+    "@types/minimist": "^1.2.5",
+    "@types/shelljs": "^0.8.15",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
   }
 }

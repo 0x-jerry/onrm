@@ -1,8 +1,7 @@
 import minimist from 'minimist'
-import fs from 'fs'
-import path from 'path'
 import { actions } from './actions'
 import chalk from 'chalk'
+import { version } from '../package.json'
 
 const argv = minimist(process.argv.slice(2))
 
@@ -11,7 +10,7 @@ resolveArgv(argv)
 function resolveArgv(argv: any = {}) {
   const { help, h } = argv
   const [actionName, ...params] = argv._
-  console.log(chalk.cyan(`onrm v${getVersion()}`), '\n')
+  console.log(chalk.cyan(`onrm v${version}`), '\n')
 
   if (help || h || !actionName) {
     printUsage()
@@ -46,12 +45,4 @@ function printUsage() {
     rm <name>                     Delete one custom registry
     rename <old name> <new name>  Rename exist registry
 `)
-}
-
-function getVersion(): string {
-  const pkgPath = path.join(__dirname, '..', 'package.json')
-  const pkgStr = fs.readFileSync(pkgPath, { encoding: 'utf-8' })
-  const pkg = JSON.parse(pkgStr)
-
-  return pkg.version
 }
