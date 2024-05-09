@@ -38,7 +38,7 @@
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "@0x-jerry/x-release": "^0.4.0",
+    "@0x-jerry/x-release": "^2.0.0",
     "@types/iarna__toml": "^2.0.5",
     "@types/inquirer": "^9.0.7",
     "@types/minimist": "^1.2.5",
