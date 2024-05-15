@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "dev": "tsx src/cli.ts",
-    "build": "tsup src/cli.ts --format esm",
+    "prepublishOnly": "npm run build",
+    "build": "tsup src/cli.ts --format esm --clean",
     "release": "x-release"
   },
   "publishConfig": {
@@ -33,18 +34,18 @@
     "@iarna/toml": "^2.2.5",
     "chalk": "^5.3.0",
     "cli-highlight": "^2.1.11",
-    "inquirer": "^9.2.14",
+    "inquirer": "^9.2.21",
     "minimist": "^1.2.8",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "@0x-jerry/x-release": "^0.4.0",
+    "@0x-jerry/x-release": "^2.1.0",
     "@types/iarna__toml": "^2.0.5",
     "@types/inquirer": "^9.0.7",
     "@types/minimist": "^1.2.5",
     "@types/shelljs": "^0.8.15",
     "tsup": "^8.0.2",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "tsx": "^4.10.2",
+    "typescript": "^5.4.5"
   }
 }
