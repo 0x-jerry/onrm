@@ -34,7 +34,7 @@
     "@iarna/toml": "^2.2.5",
     "chalk": "^5.3.0",
     "cli-highlight": "^2.1.11",
-    "inquirer": "^9.2.21",
+    "inquirer": "^10.0.0",
     "minimist": "^1.2.8",
     "shelljs": "^0.8.5"
   },
