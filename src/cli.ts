@@ -1,6 +1,6 @@
 import minimist from 'minimist'
 import { actions } from './actions'
-import chalk from 'chalk'
+import pc from 'picocolors'
 import { version } from '../package.json'
 
 const argv = minimist(process.argv.slice(2))
@@ -10,7 +10,7 @@ resolveArgv(argv)
 function resolveArgv(argv: any = {}) {
   const { help, h } = argv
   const [actionName, ...params] = argv._
-  console.log(chalk.cyan(`onrm v${version}`), '\n')
+  console.log(pc.cyan(`onrm v${version}`), '\n')
 
   if (help || h || !actionName) {
     printUsage()

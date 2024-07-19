@@ -32,20 +32,19 @@
   "license": "MIT",
   "dependencies": {
     "@iarna/toml": "^2.2.5",
-    "chalk": "^5.3.0",
+    "@inquirer/prompts": "^5.2.1",
     "cli-highlight": "^2.1.11",
-    "inquirer": "^9.2.21",
     "minimist": "^1.2.8",
+    "picocolors": "^1.0.1",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "@0x-jerry/x-release": "^2.1.0",
+    "@0x-jerry/x-release": "^2.2.2",
     "@types/iarna__toml": "^2.0.5",
-    "@types/inquirer": "^9.0.7",
     "@types/minimist": "^1.2.5",
     "@types/shelljs": "^0.8.15",
-    "tsup": "^8.0.2",
-    "tsx": "^4.10.2",
-    "typescript": "^5.4.5"
+    "tsup": "^8.2.0",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
   }
 }

@@ -1,7 +1,7 @@
 import { getConfig, type ONRMConfig, ONRMRC, type RegistryConfig, saveConfig } from './config'
-import inquirer from 'inquirer'
+import { confirm } from '@inquirer/prompts'
 import { bun, npm, RegistryManager, yarn } from './registryManager'
-import chalk from 'chalk'
+import pc from 'picocolors'
 import { printTable } from './print'
 import { highlight } from 'cli-highlight'
 
@@ -21,19 +21,17 @@ async function add(name: string, registry: string, homeUrl: string = '') {
   const existConf = conf.registries[name]
 
   if (existConf) {
-    const answer = await inquirer.prompt({
-      message: `Found exist registry [${chalk.yellow(name)}], override it ?`,
-      name: 'isOverride',
-      type: 'confirm',
+    const isOverride = await confirm({
+      message: `Found exist registry [${pc.yellow(name)}], override it ?`,
       default: true
     })
     console.log()
 
-    if (answer.isOverride) {
+    if (isOverride) {
       Object.assign(existConf, currentConf)
       saveConfig(conf)
 
-      console.log(`Update registry [${chalk.yellow(name)}](${chalk.green(registry)}) successful.`)
+      console.log(`Update registry [${pc.yellow(name)}](${pc.green(registry)}) successful.`)
       return
     }
 
@@ -44,7 +42,7 @@ async function add(name: string, registry: string, homeUrl: string = '') {
   conf.registries[name] = currentConf
 
   saveConfig(conf)
-  console.log(`Add registry [${chalk.yellow(name)}](${chalk.green(registry)}) successful.`)
+  console.log(`Add registry [${pc.yellow(name)}](${pc.green(registry)}) successful.`)
 }
 
 function rm(name: string) {
@@ -52,14 +50,14 @@ function rm(name: string) {
 
   const exist = conf.registries[name]
   if (!exist) {
-    console.log(`Not found registry for [${chalk.yellow(name)}].\n`)
+    console.log(`Not found registry for [${pc.yellow(name)}].\n`)
     _printRegistry(conf.registries)
     return
   }
 
   delete conf.registries[name]
   saveConfig(conf)
-  console.log(`Delete registry [${chalk.yellow(name)}](${chalk.green(exist.registry)}) successful.`)
+  console.log(`Delete registry [${pc.yellow(name)}](${pc.green(exist.registry)}) successful.`)
 }
 
 function rename(oldName: string, newName: string) {
@@ -67,7 +65,7 @@ function rename(oldName: string, newName: string) {
 
   const exist = conf.registries[oldName]
   if (!exist) {
-    console.log(`Not found registry for [${chalk.yellow(oldName)}].\n`)
+    console.log(`Not found registry for [${pc.yellow(oldName)}].\n`)
     _printRegistry(conf.registries)
     return
   }
@@ -75,7 +73,7 @@ function rename(oldName: string, newName: string) {
   conf.registries[newName] = conf.registries[oldName]
   delete conf.registries[oldName]
   saveConfig(conf)
-  console.log(`Rename [${chalk.yellow(oldName)}] to [${chalk.green(newName)}] successful.`)
+  console.log(`Rename [${pc.yellow(oldName)}] to [${pc.green(newName)}] successful.`)
 }
 
 function use(name: string, type?: 'npm' | 'yarn') {
@@ -83,14 +81,14 @@ function use(name: string, type?: 'npm' | 'yarn') {
   const registryConf = conf.registries[name]
 
   if (!registryConf) {
-    console.log(`Not found registry named [${chalk.yellow(name)}]!\n`)
+    console.log(`Not found registry named [${pc.yellow(name)}]!\n`)
     _printRegistry(conf.registries)
     return
   }
 
   if (type) {
     managers[type].setRegistry(registryConf.registry)
-    console.log(`Set registry(${chalk.yellow(name)}) for [${chalk.green(type)}] successful!`)
+    console.log(`Set registry(${pc.yellow(name)}) for [${pc.green(type)}] successful!`)
     return
   }
 
@@ -100,8 +98,8 @@ function use(name: string, type?: 'npm' | 'yarn') {
   }
 
   console.log(
-    `Set registry(${chalk.yellow(`${name} - ${registryConf.registry}`)}) for` +
-      ` [${chalk.green(Object.keys(managers).join(', '))}] successful!`
+    `Set registry(${pc.yellow(`${name} - ${registryConf.registry}`)}) for` +
+      ` [${pc.green(Object.keys(managers).join(', '))}] successful!`
   )
 }
 
@@ -142,7 +140,7 @@ function ls() {
 function config() {
   const conf = getConfig()
 
-  console.log('Config path:', chalk.green(ONRMRC), '\n')
+  console.log('Config path:', pc.green(ONRMRC), '\n')
 
   console.log(highlight(JSON.stringify(conf, null, 2), { language: 'json', ignoreIllegals: true }))
 }

@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import pc from 'picocolors'
 
 export function printTable(table: string[][]) {
   table = uniformTable(table)
@@ -58,5 +58,5 @@ function printLine(row: string[]) {
 function highlight(str: string) {
   const url = /https?:\/\/[^\s]+/g
 
-  return str.replace(url, (s) => chalk.green(s))
+  return str.replace(url, (s) => pc.green(s))
 }
