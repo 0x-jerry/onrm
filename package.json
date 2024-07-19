@@ -5,7 +5,10 @@
     "onrm": "bin/onrm.js"
   },
   "type": "module",
-  "repository": "git@github.com:0x-jerry/onrm.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x-jerry/onrm.git"
+  },
   "author": "0x-jerry <x.jerry.wang@gmail.com>",
   "bugs": {
     "url": "https://github.com/0x-jerry/onrm/issues/new"
