@@ -34,18 +34,19 @@
   "homepage": "https://github.com/0x-jerry/onrm",
   "license": "MIT",
   "dependencies": {
+    "@0x-jerry/utils": "^3.0.0",
     "@iarna/toml": "^2.2.5",
     "@inquirer/prompts": "^6.0.1",
     "cli-highlight": "^2.1.11",
     "minimist": "^1.2.8",
     "picocolors": "^1.1.0",
-    "shelljs": "^0.8.5"
+    "which": "^4.0.0"
   },
   "devDependencies": {
     "@0x-jerry/x-release": "^2.2.2",
     "@types/iarna__toml": "^2.0.5",
     "@types/minimist": "^1.2.5",
-    "@types/shelljs": "^0.8.15",
+    "@types/which": "^3.0.4",
     "tsup": "^8.3.0",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2"

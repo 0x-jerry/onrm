@@ -45,13 +45,13 @@ async function add(name: string, registry: string, homeUrl: string = '') {
   console.log(`Add registry [${pc.yellow(name)}](${pc.green(registry)}) successful.`)
 }
 
-function rm(name: string) {
+async function rm(name: string) {
   const conf = getConfig()
 
   const exist = conf.registries[name]
   if (!exist) {
     console.log(`Not found registry for [${pc.yellow(name)}].\n`)
-    _printRegistry(conf.registries)
+    await _printRegistry(conf.registries)
     return
   }
 
@@ -60,13 +60,13 @@ function rm(name: string) {
   console.log(`Delete registry [${pc.yellow(name)}](${pc.green(exist.registry)}) successful.`)
 }
 
-function rename(oldName: string, newName: string) {
+async function rename(oldName: string, newName: string) {
   const conf = getConfig()
 
   const exist = conf.registries[oldName]
   if (!exist) {
     console.log(`Not found registry for [${pc.yellow(oldName)}].\n`)
-    _printRegistry(conf.registries)
+    await _printRegistry(conf.registries)
     return
   }
 
@@ -76,25 +76,25 @@ function rename(oldName: string, newName: string) {
   console.log(`Rename [${pc.yellow(oldName)}] to [${pc.green(newName)}] successful.`)
 }
 
-function use(name: string, type?: 'npm' | 'yarn') {
+async function use(name: string, type?: 'npm' | 'yarn') {
   const conf = getConfig()
   const registryConf = conf.registries[name]
 
   if (!registryConf) {
     console.log(`Not found registry named [${pc.yellow(name)}]!\n`)
-    _printRegistry(conf.registries)
+    await _printRegistry(conf.registries)
     return
   }
 
   if (type) {
-    managers[type].setRegistry(registryConf.registry)
+    await managers[type].setRegistry(registryConf.registry)
     console.log(`Set registry(${pc.yellow(name)}) for [${pc.green(type)}] successful!`)
     return
   }
 
   for (const key in managers) {
     const manager = managers[key]
-    manager.setRegistry(registryConf.registry)
+    await manager.setRegistry(registryConf.registry)
   }
 
   console.log(
@@ -103,7 +103,7 @@ function use(name: string, type?: 'npm' | 'yarn') {
   )
 }
 
-function _printRegistry(registries: ONRMConfig['registries']) {
+async function _printRegistry(registries: ONRMConfig['registries']) {
   const table: string[][] = []
 
   const used: { type: string; registry: string }[] = []
@@ -112,7 +112,7 @@ function _printRegistry(registries: ONRMConfig['registries']) {
     const manager = managers[key]
     used.push({
       type: key,
-      registry: manager.getRegistry()
+      registry: await manager.getRegistry()
     })
   }
 
@@ -132,12 +132,12 @@ function _printRegistry(registries: ONRMConfig['registries']) {
   printTable(table)
 }
 
-function ls() {
+async function ls() {
   const conf = getConfig()
-  _printRegistry(conf.registries)
+  await _printRegistry(conf.registries)
 }
 
-function config() {
+async function config() {
   const conf = getConfig()
 
   console.log('Config path:', pc.green(ONRMRC), '\n')

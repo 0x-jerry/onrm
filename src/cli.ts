@@ -7,7 +7,7 @@ const argv = minimist(process.argv.slice(2))
 
 resolveArgv(argv)
 
-function resolveArgv(argv: any = {}) {
+async function resolveArgv(argv: any = {}) {
   const { help, h } = argv
   const [actionName, ...params] = argv._
   console.log(pc.cyan(`onrm v${version}`), '\n')
@@ -26,7 +26,11 @@ function resolveArgv(argv: any = {}) {
     return
   }
 
-  action(...params)
+  try {
+    await action(...params)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 function printUsage() {

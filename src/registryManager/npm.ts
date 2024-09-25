@@ -1,30 +1,30 @@
+import { which } from '../utils'
 import { RegistryManager } from './base'
-import shelljs from 'shelljs'
 
 class Npm extends RegistryManager {
-  protected checkIsExist(): boolean {
-    return !!shelljs.which('npm')
+  protected checkIsExist(): Promise<boolean> {
+    return which('npm')
   }
 
-  setRegistry(value: string): boolean {
-    if (!this.isExist()) {
+  async setRegistry(value: string): Promise<boolean> {
+    if (!(await this.isExist())) {
       return false
     } else {
-      this.exec(`npm config set registry ${value}`)
+      await this.exec(`npm config set registry ${value}`)
       return true
     }
   }
 
-  getRegistry(): string {
-    if (!this.isExist()) {
+  async getRegistry(): Promise<string> {
+    if (!(await this.isExist())) {
       return ''
     }
 
     return this.exec(`npm config get registry`)
   }
 
-  getVersion(): string {
-    return this.isExist() ? this.exec('npm -v') : ''
+  async getVersion(): Promise<string> {
+    return (await this.isExist()) ? await this.exec('npm -v') : ''
   }
 }
 

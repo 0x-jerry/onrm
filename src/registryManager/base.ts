@@ -1,25 +1,25 @@
-import shelljs from 'shelljs'
+import { run } from '@0x-jerry/utils/node'
 
 export abstract class RegistryManager {
-  protected abstract checkIsExist(): boolean
+  protected abstract checkIsExist(): Promise<boolean>
 
-  abstract setRegistry(value: string): boolean
-  abstract getRegistry(): string
-  abstract getVersion(): string
+  abstract setRegistry(value: string): Promise<boolean>
+  abstract getRegistry(): Promise<string>
+  abstract getVersion(): Promise<string>
 
   private _isExist?: boolean
 
-  isExist(): boolean {
+  async isExist(): Promise<boolean> {
     if (this._isExist === undefined) {
-      this._isExist = this.checkIsExist()
+      this._isExist = await this.checkIsExist()
     }
 
     return this._isExist
   }
 
-  protected exec(command: string) {
-    const res = shelljs.exec(command, { silent: true })
+  protected async exec(command: string) {
+    const result = await run(command, {}, { collectOutput: true, silent: true })
 
-    return res.stdout.trim()
+    return result.trim()
   }
 }

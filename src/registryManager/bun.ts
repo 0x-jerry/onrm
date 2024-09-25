@@ -1,21 +1,21 @@
 import { RegistryManager } from './base'
-import shelljs from 'shelljs'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import toml from '@iarna/toml'
+import { which } from '../utils'
 
 const CONFIG_FILE = '.bunfig.toml'
 
 class Bun extends RegistryManager {
   configPath = `${path.join(os.homedir(), CONFIG_FILE)}`
 
-  protected checkIsExist(): boolean {
-    return !!shelljs.which('bun')
+  protected checkIsExist(): Promise<boolean> {
+    return which('bun')
   }
 
-  setRegistry(value: string): boolean {
-    if (!this.isExist()) {
+  async setRegistry(value: string): Promise<boolean> {
+    if (!(await this.isExist())) {
       return false
     } else {
       const conf = this.readBunConfig()
@@ -28,8 +28,8 @@ class Bun extends RegistryManager {
     }
   }
 
-  getRegistry(): string {
-    if (!this.isExist()) {
+  async getRegistry(): Promise<string> {
+    if (!(await this.isExist())) {
       return ''
     }
 
@@ -38,8 +38,8 @@ class Bun extends RegistryManager {
     return conf.install?.registry || 'https://registry.npmjs.org/'
   }
 
-  getVersion(): string {
-    return this.isExist() ? this.exec('bun --version') : ''
+  async getVersion(): Promise<string> {
+    return (await this.isExist()) ? await this.exec('bun --version') : ''
   }
 
   readBunConfig(): any {
