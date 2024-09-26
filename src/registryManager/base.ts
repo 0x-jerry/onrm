@@ -18,7 +18,7 @@ export abstract class RegistryManager {
   }
 
   protected async exec(command: string) {
-    const result = await run(command, {}, { collectOutput: true, silent: true })
+    const result = await run(command, process.env, { collectOutput: true, silent: true })
 
     return result.trim()
   }
