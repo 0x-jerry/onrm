@@ -1,4 +1,4 @@
-import { run } from '@0x-jerry/utils/node'
+import { exec } from '@0x-jerry/utils/node'
 
 export abstract class RegistryManager {
   protected abstract checkIsExist(): Promise<boolean>
@@ -18,7 +18,7 @@ export abstract class RegistryManager {
   }
 
   protected async exec(command: string) {
-    const result = await run(command, process.env, { collectOutput: true, silent: true })
+    const result = await exec(command, { collectOutput: true, silent: true })
 
     return result.trim()
   }
