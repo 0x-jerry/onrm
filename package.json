@@ -34,7 +34,7 @@
   "homepage": "https://github.com/0x-jerry/onrm",
   "license": "MIT",
   "dependencies": {
-    "@0x-jerry/utils": "^3.0.2",
+    "@0x-jerry/utils": "^4.0.0",
     "@iarna/toml": "^2.2.5",
     "@inquirer/prompts": "^6.0.1",
     "cli-highlight": "^2.1.11",
