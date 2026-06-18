@@ -1,4 +1,4 @@
-name: Release
+name: Publish
 
 on:
   push:
@@ -8,3 +8,6 @@ on:
 jobs:
   release:
     uses: 0x-jerry/workflows/.github/workflows/publish.yml@main
+    permissions:
+      id-token: write
+      contents: read
