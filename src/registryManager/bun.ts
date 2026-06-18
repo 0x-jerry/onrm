@@ -2,7 +2,7 @@ import { RegistryManager } from './base'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import toml from '@iarna/toml'
+import toml from 'smol-toml'
 import { which } from '../utils'
 
 const CONFIG_FILE = '.bunfig.toml'

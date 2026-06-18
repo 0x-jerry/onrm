@@ -3,7 +3,7 @@ import pc from 'picocolors'
 export function printTable(table: string[][]) {
   table = uniformTable(table)
 
-  const [header, ...content] = table
+  const [header = [], ...content] = table
 
   printLine(header)
   printLine(header.map((n) => '-'.repeat(n.length)))
@@ -26,7 +26,7 @@ function uniformTable(table: string[][]) {
         return
       }
 
-      uniformedRow[idx] = s.padEnd(colLens[idx], ' ')
+      uniformedRow[idx] = s.padEnd(colLens[idx] || 0, ' ')
     })
 
     uniformed.push(uniformedRow)
@@ -36,10 +36,10 @@ function uniformTable(table: string[][]) {
 }
 
 function calcColLength(table: string[][]) {
-  const [header, ...content] = table
+  const [header = [], ...content] = table
   const colLens = []
   for (let idx = 0; idx < header.length; idx++) {
-    let maxLen = header[idx].length
+    let maxLen = header[idx]?.length || 0
 
     content.forEach((row) => {
       maxLen = Math.max((row[idx] || '').length, maxLen)

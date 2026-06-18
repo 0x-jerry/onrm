@@ -70,7 +70,7 @@ async function rename(oldName: string, newName: string) {
     return
   }
 
-  conf.registries[newName] = conf.registries[oldName]
+  conf.registries[newName] = conf.registries[oldName]!
   delete conf.registries[oldName]
   saveConfig(conf)
   console.log(`Rename [${pc.yellow(oldName)}] to [${pc.green(newName)}] successful.`)
@@ -87,13 +87,13 @@ async function use(name: string, type?: 'npm' | 'yarn') {
   }
 
   if (type) {
-    await managers[type].setRegistry(registryConf.registry)
+    await managers[type]!.setRegistry(registryConf.registry)
     console.log(`Set registry(${pc.yellow(name)}) for [${pc.green(type)}] successful!`)
     return
   }
 
   for (const key in managers) {
-    const manager = managers[key]
+    const manager = managers[key]!
     await manager.setRegistry(registryConf.registry)
   }
 
@@ -109,7 +109,7 @@ async function _printRegistry(registries: ONRMConfig['registries']) {
   const used: { type: string; registry: string }[] = []
 
   for (const key in managers) {
-    const manager = managers[key]
+    const manager = managers[key]!
     used.push({
       type: key,
       registry: await manager.getRegistry()
@@ -119,7 +119,7 @@ async function _printRegistry(registries: ONRMConfig['registries']) {
   table.push(['*', 'Name', 'Registry', 'Home url', 'Used by'])
 
   for (const key in registries) {
-    const registryConf = registries[key]
+    const registryConf = registries[key]!
 
     const usedBy = used
       .filter((u) => u.registry.replace(/\/$/, '') === registryConf.registry.replace(/\/$/, ''))
