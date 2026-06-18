@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  release:
+  publish:
     uses: 0x-jerry/workflows/.github/workflows/publish.yml@main
     permissions:
       id-token: write
