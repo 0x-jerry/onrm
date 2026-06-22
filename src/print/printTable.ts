@@ -1,62 +1,14 @@
 import pc from 'picocolors'
+import { textTableToString } from '@0x-jerry/utils'
 
 export function printTable(table: string[][]) {
-  table = uniformTable(table)
+  const result = textTableToString(table, {
+    highlight(cell) {
+      const url = /https?:\/\/[^\s]+/g
 
-  const [header = [], ...content] = table
-
-  printLine(header)
-  printLine(header.map((n) => '-'.repeat(n.length)))
-
-  content.forEach((row) => printLine(row))
-}
-
-function uniformTable(table: string[][]) {
-  const colLens = calcColLength(table)
-
-  const uniformed: string[][] = []
-
-  table.forEach((row) => {
-    const uniformedRow: string[] = []
-
-    row.forEach((s, idx) => {
-      // if first column is a single character, do not add padding space
-      if (s.length <= 1 && idx === 0) {
-        uniformedRow[idx] = s.padEnd(1, ' ')
-        return
-      }
-
-      uniformedRow[idx] = s.padEnd(colLens[idx] || 0, ' ')
-    })
-
-    uniformed.push(uniformedRow)
+      return String(cell).replace(url, (s) => pc.green(s))
+    }
   })
 
-  return uniformed
-}
-
-function calcColLength(table: string[][]) {
-  const [header = [], ...content] = table
-  const colLens = []
-  for (let idx = 0; idx < header.length; idx++) {
-    let maxLen = header[idx]?.length || 0
-
-    content.forEach((row) => {
-      maxLen = Math.max((row[idx] || '').length, maxLen)
-    })
-
-    colLens[idx] = maxLen + 2
-  }
-
-  return colLens
-}
-
-function printLine(row: string[]) {
-  console.log(...row.map((s) => highlight(s)))
-}
-
-function highlight(str: string) {
-  const url = /https?:\/\/[^\s]+/g
-
-  return str.replace(url, (s) => pc.green(s))
+  console.log(result)
 }

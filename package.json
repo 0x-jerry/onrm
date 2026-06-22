@@ -34,7 +34,7 @@
   "homepage": "https://github.com/0x-jerry/onrm",
   "license": "MIT",
   "dependencies": {
-    "@0x-jerry/utils": "^6.4.2",
+    "@0x-jerry/utils": "^6.5.0",
     "@inquirer/prompts": "^8.5.2",
     "@speed-highlight/core": "^1.2.17",
     "minimist": "^1.2.8",

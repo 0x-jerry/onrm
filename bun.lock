@@ -5,7 +5,7 @@
     "": {
       "name": "onrm",
       "dependencies": {
-        "@0x-jerry/utils": "^6.4.2",
+        "@0x-jerry/utils": "^6.5.0",
         "@inquirer/prompts": "^8.5.2",
         "@speed-highlight/core": "^1.2.17",
         "minimist": "^1.2.8",
@@ -26,7 +26,7 @@
   "packages": {
     "@0x-jerry/load-pkg": ["@0x-jerry/load-pkg@0.1.5", "https://registry.npmmirror.com/@0x-jerry/load-pkg/-/load-pkg-0.1.5.tgz", {}, "sha512-OsG9WZfCDzLaIC5t7HNHAYdpvZEf5efs/+fLEXsbOQr3IdZyMuWA27utAOsrNwTfl1BCgr6+r048ZyMd9YE72Q=="],
 
-    "@0x-jerry/utils": ["@0x-jerry/utils@6.4.2", "https://registry.npmmirror.com/@0x-jerry/utils/-/utils-6.4.2.tgz", { "dependencies": { "fflate": "^0.8.2", "nanoid": "^5.1.7", "picocolors": "^1.1.1" } }, "sha512-5dGHv8ZWzYgSLSch7hraNg6DbjYke92OW+b5ytY8wYdMX05Q4RLVCzud+ref/KQxPEHJVYWz3+7ZjwwGINhU+A=="],
+    "@0x-jerry/utils": ["@0x-jerry/utils@6.5.0", "https://registry.npmmirror.com/@0x-jerry/utils/-/utils-6.5.0.tgz", { "dependencies": { "fflate": "^0.8.3", "nanoid": "^5.1.7", "picocolors": "^1.1.1" } }, "sha512-ICOwVSIkJZTKZQlk8u1BpRrvx6ps0WwWHNavw344fFkhVCRQjfyY6islNylsFd+Ra4ndkuwWEtPDUCrGAoP7rQ=="],
 
     "@0x-jerry/x-release": ["@0x-jerry/x-release@3.0.5", "https://registry.npmmirror.com/@0x-jerry/x-release/-/x-release-3.0.5.tgz", { "dependencies": { "@0x-jerry/load-pkg": "^0.1.5", "@0x-jerry/utils": "^6.4.2", "cac": "^7.0.0", "debug": "^4.4.3", "picocolors": "^1.1.1", "prompts": "^2.4.2", "semver": "^7.7.4", "unconfig": "^7.5.0" }, "bin": { "x-release": "dist/cli.mjs" } }, "sha512-vYkx7lPgsOsNsYf6idYS4wkhQcASTJcPtpdWNLqScQzM0dj6cw5udOvuwXOhMBAYhlZezsgpskEMaylbY1E92w=="],
 
@@ -226,7 +226,7 @@
 
     "fdir": ["fdir@6.5.0", "https://registry.npmmirror.com/fdir/-/fdir-6.5.0.tgz", { "optionalDependencies": { "picomatch": "4.0.3" } }, "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg=="],
 
-    "fflate": ["fflate@0.8.2", "https://registry.npmmirror.com/fflate/-/fflate-0.8.2.tgz", {}, "sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A=="],
+    "fflate": ["fflate@0.8.3", "https://registry.npmmirror.com/fflate/-/fflate-0.8.3.tgz", {}, "sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA=="],
 
     "fsevents": ["fsevents@2.3.3", "https://registry.npmmirror.com/fsevents/-/fsevents-2.3.3.tgz", { "os": "darwin" }, "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="],
 
@@ -308,8 +308,12 @@
 
     "which": ["which@7.0.0", "https://registry.npmmirror.com/which/-/which-7.0.0.tgz", { "dependencies": { "isexe": "^4.0.0" }, "bin": { "node-which": "bin/which.js" } }, "sha512-RancgH2dmbLdHl6LRhEqvklWMgl/Hdnun0Y90KhBOLkMefg8Qa7/Zel8Sm+8HEcP6DEjzsWzpkuBQEZok58isA=="],
 
+    "@0x-jerry/x-release/@0x-jerry/utils": ["@0x-jerry/utils@6.4.2", "https://registry.npmmirror.com/@0x-jerry/utils/-/utils-6.4.2.tgz", { "dependencies": { "fflate": "^0.8.2", "nanoid": "^5.1.7", "picocolors": "^1.1.1" } }, "sha512-5dGHv8ZWzYgSLSch7hraNg6DbjYke92OW+b5ytY8wYdMX05Q4RLVCzud+ref/KQxPEHJVYWz3+7ZjwwGINhU+A=="],
+
     "fdir/picomatch": ["picomatch@4.0.3", "https://registry.npmmirror.com/picomatch/-/picomatch-4.0.3.tgz", {}, "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q=="],
 
     "unconfig/defu": ["defu@6.1.4", "https://registry.npmmirror.com/defu/-/defu-6.1.4.tgz", {}, "sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg=="],
+
+    "@0x-jerry/x-release/@0x-jerry/utils/fflate": ["fflate@0.8.2", "https://registry.npmmirror.com/fflate/-/fflate-0.8.2.tgz", {}, "sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A=="],
   }
 }
