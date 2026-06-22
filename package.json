@@ -1,6 +1,6 @@
 {
   "name": "onrm",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "bin": {
     "onrm": "bin/onrm.js"
   },
