@@ -3,7 +3,7 @@ import { confirm } from '@inquirer/prompts'
 import { bun, npm, RegistryManager, yarn } from './registryManager'
 import pc from 'picocolors'
 import { printTable } from './print'
-import { highlight } from 'cli-highlight'
+import { printHighlight } from '@speed-highlight/core/terminal'
 
 const managers: Record<string, RegistryManager> = {
   npm,
@@ -140,9 +140,9 @@ async function ls() {
 async function config() {
   const conf = getConfig()
 
-  console.log('Config path:', pc.green(ONRMRC), '\n')
+  console.log('Config path:', pc.green(ONRMRC), '\n---')
 
-  console.log(highlight(JSON.stringify(conf, null, 2), { language: 'json', ignoreIllegals: true }))
+  printHighlight(JSON.stringify(conf, null, 2), 'json')
 }
 
 export const actions = {
